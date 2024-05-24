@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<header th:fragment="header">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="/home"><i class="fa-solid fa-car"></i>Rent a Car Today!</a>
+            <!--                <span class="navbar-toggler-icon"></span>-->
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link border-1 border-end border-start  border-white " href="/about">About Us</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" data-bs-toggle="modal" data-bs-target="#formModal">Sign Up</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" data-bs-toggle="modal" data-bs-target="#formModal">Log In</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+</header>
+<div th:fragment="headerlog">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="/index"><i class="fa-solid fa-car"></i>Rent a Car Today!</a>
+            <div class="collapse navbar-collapse">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link border-1 border-end border-start  border-white " href="/about">About Us</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button"
+                           data-bs-toggle="dropdown" aria-expanded="false" th:text="${username}">
+                            <i class="fas fa-user"></i> Welcome
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-end" style="margin-right: 20px;"
+                            aria-labelledby="navbarDropdownMenuLink">
+                            <li><a class="dropdown-item" href="/profile/edit">My Profile</a></li>
+                            <li><a class="dropdown-item" href="/booking/list">My Bookings</a></li>
+                            <li><a class="dropdown-item" href="/profile/wallet">My Wallet</a></li>
+                            <li><a class="dropdown-item" href="/car/new">Add New Car</a></li>
+                            <li>
+                                <hr class="dropdown-divider">
+                            </li>
+                            <li><a class="dropdown-item" href="/logout" data-bs-toggle="modal"
+                                   data-bs-target="#myModal">Logout</a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <div class="modal fade" id="myModal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title">Log Out</h4>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+
+                <!-- Modal body -->
+                <div class="modal-body">
+                    Are you sure you want to log out?
+                </div>
+
+                <!-- Modal footer -->
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" th:onclick="'window.location.href=\'/logout\''" class="btn btn-primary">OK
+                    </button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+</div>
+<footer th:fragment="footer" class="text-white bg-dark py-3">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4 mb-3 mb-md-0">
+                <h6>RENT CARS</h6>
+                <ul class="list-unstyled text-small">
+                    <li><a href="/car/search" class="text-white">Search Cars and Rates</a></li>
+                </ul>
+            </div>
+
+            <div class="col-md-4 mb-3 mb-md-0">
+                <h6>CUSTOMER ACCESS</h6>
+                <ul class="list-unstyled text-small">
+                    <li><a href="/booking/list" class="text-white">Manage My Booking</a></li>
+                    <li><a href="/profile/wallet" class="text-white">My Wallet</a></li>
+                    <li><a href="/car/list" class="text-white">My Car</a></li>
+                    <li><a href="/index" class="text-white">Log In</a></li>
+                </ul>
+            </div>
+
+            <div class="col-md-4 mb-3 mb-md-0">
+                <h6>JOIN US</h6>
+                <ul class="list-unstyled text-small">
+                    <li><a href="/index" class="text-white">New User Sign Up</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</footer>
+</html>

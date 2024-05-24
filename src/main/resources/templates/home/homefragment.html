@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<section th:fragment="feature" class="bg-white p-3 text-center">
+    <h2 class="fs-1 fw-bold mb-3 ">Why us?</h2>
+    <div class="container-fluid d-flex justify-content-around">
+        <div class="text-center">
+            <p class=" border border-2 rounded-circle"><i class="fa-solid fa-money-bill"></i></p>
+            <h3>Save money</h3>
+            <p>We have no setup
+                or registration
+                fees. You are only
+                charged when you
+                rent a car. So
+                started for FREE!</p>
+        </div>
+        <div class="col-md-3 p-3 border ">
+            <p class="border border-2 rounded-circle"><i class="fa-solid fa-money-bill"></i></p>
+            <h3>Convenient</h3>
+            <p>We have a large selection of privately owned cars to suit your needs throughout the country.</p>
+        </div>
+        <div class="col-md-3 p-3 border">
+            <p class="border border-2 rounded-circle"><i class="fa-solid fa-money-bill"></i></p>
+            <h3>Legal and insurance</h3>
+            <p>We fully cover all rentals and even provide roadside assistance. Our rating system and extended
+                member profile checks provide safety.</p>
+        </div>
+        <div class="col-md-3 p-3 border">
+            <p class="border border-2 rounded-circle"><i class="fa-solid fa-money-bill"></i></p>
+            <h3>24/7 Support</h3>
+            <p>Our team is ready to support you all along the way with our 24/7 hotline and services.</p>
+        </div>
+    </div>
+</section>
+<section th:fragment="comment" class="bg-white p-3">
+    <h2 class="fs-1 fw-bold mb-3">What people say?</h2>
+    <div class="g-4 d-flex container-fluid justify-content-around flex-wrap " id="feedback">
+        <div th:each="feedback : ${feedBackList}" class="d-flex text-center align-items-center col-md-6">
+            <img src="https://tse3.mm.bing.net/th?id=OIP.mrfb_atnkblnmsDiAbLNKwHaHa&pid=Api&P=0&h=180" alt="Person 1">
+            <div class="d-flex flex-column align-items-center">
+                <h3 th:text="${feedback.name}"></h3>
+                <p th:text="${feedback.content}"></p>
+            </div>
+        </div>
+
+    </div>
+</section>
+<section th:fragment="where" class="bg-white p-3">
+    <h2>Where to find us?</h2>
+    <div class="container-fluid d-flex justify-content-around flex-wrap">
+        <div class="d-flex flex-column align-items-center  col-md-4">
+            <img src="https://i1-dulich.vnecdn.net/2022/05/12/Hanoi2-1652338755-3632-1652338809.jpg?w=0&h=0&q=100&dpr=2&fit=crop&s=NxMN93PTvOTnHNryMx3xJw" alt="City 1">
+            <div>
+                <div class="text-center">
+                    <span>Ha Noi</span>
+                    <p>80+ cars</p>
+                </div>
+
+            </div>
+        </div>
+        <div class="d-flex flex-column align-items-center  col-md-4">
+            <img src="https://i1-dulich.vnecdn.net/2022/08/25/hp-1-1661420675.jpg?w=1200&h=0&q=100&dpr=1&fit=crop&s=U-NHB-CteXXndOWQ7ARNhw" alt="City 1">
+            <div class="text-center">
+                <span>Hai Phong</span>
+                <p>80+ cars</p>
+            </div>
+        </div>
+        <div class="d-flex flex-column align-items-center  col-md-4">
+            <img src="https://dulichviet.com.vn/images/bandidau/kham-pha-27-dia-diem-du-lich-quang-ninh-view-dep-noi-tieng-hang-dau.jpg" alt="City 1">
+            <div class="text-center">
+                <span>Quang Ninh</span>
+                <p>80+ cars</p>
+            </div>
+        </div>
+        <div class="d-flex flex-column align-items-center  col-md-4">
+            <img src="https://static-images.vnncdn.net/files/publish/2023/11/7/at-ve-dep-thanh-pho-da-nang-giu-tron-tung-khoanh-khac-6b555585df3ca96d931cf6f4378c9488-1276.jpg" alt="City 1">
+            <div class="text-center">
+                <span>Da Nang</span>
+                <p>80+ cars</p>
+            </div>
+        </div>
+        <div class="d-flex flex-column align-items-center  col-md-4">
+            <img src="https://tphcm.dangcongsan.vn/DATA/72/IMAGES/2023/11/tao-da-de-tphcm-phat-trien-thanh-do-thi-thong-minh1517188897.jpg" alt="City 1">
+            <div class="text-center">
+                <span>Ho Chi Minh City</span>
+                <p>80+ cars</p>
+            </div>
+        </div>
+        <div class="d-flex flex-column align-items-center  col-md-4">
+            <img src="https://bcp.cdnchinhphu.vn/334894974524682240/2023/6/3/121774598-699865344269296-8580-6401-9195-1603091427-1685772359380838073551.jpg" alt="City 1">
+            <div class="text-center">
+                <span>Can Tho</span>
+                <p>80+ cars</p>
+            </div>
+        </div>
+
+    </div>
+</section>

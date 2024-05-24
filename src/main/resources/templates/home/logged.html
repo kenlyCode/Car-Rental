@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+            crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+          integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A=="
+          crossorigin="anonymous" referrerpolicy="no-referrer"/>
+    <title>Guest page</title>
+    <style>
+         img {
+            width: 80%;
+            height: 250px; /* Adjust this value to your desired height */
+            object-fit: cover;
+            box-sizing: border-box;
+        }
+    </style>
+</head>
+<body>
+<header th:replace="~{layout/template :: headerlog}"></header>
+<main>
+    <section class="d-flex justify-content-around mt-4  ">
+        <div class="">
+            <h2>Looking for a vehicle?<br>You're at the right place.</h2>
+            <p>We have a large selection of locally owned cars<br>
+                available for you to choose from. Rental plans<br>
+                are customised to suit your needs.</p>
+            <p>With over 300 cars located nationwide we will<br> have something for you.</p>
+        </div>
+        <div class="mx-0 col-md-6 bg-secondary">
+            <form th:action="@{/car/search}" th:method="get" class="form-control bg-secondary ">
+                <h2 class="text-center text-white ">Find the ideal car rental for your trip</h2>
+                <br>
+                <div class="ms-5">
+                    <label class="form-label text-white">PICK-UP LOCATION</label>
+                    <div class=" mb-3 col-md-9 d-flex align-items-center">
+                        <div class="form-group d-flex align-items-center gap-2 w-75">
+
+                            <!-- Dropdown for City -->
+                            <select id="city" class="form-control">
+
+                            </select>
+
+                            <!-- Dropdown for District -->
+                            <select id="district" class="form-control ">
+
+                            </select>
+
+                            <!-- Dropdown for Ward -->
+                            <select id="ward" class="form-control">
+
+                            </select>
+                        </div>
+                        <input type="text" class="form-control w-50 ms-4" placeholder="Enter your location"
+                               aria-label="Text input with segmented dropdown button">
+                    </div>
+
+                    <br>
+                    <p class="text-white ">PICK-UP DATE AND TIME</p>
+                    <div class="d-flex align-items-center w-75 ">
+                        <input type="date" placeholder="DD/MM/YYYY" class="form-control w-50">
+                        <input type="time" class="form-control w-50 ms-3 " placeholder="HH/MM">
+                    </div>
+                    <br>
+                    <p class="text-white ">DROP-OFF DATE AND TIME</p>
+                    <div class="d-flex align-items-center w-75 ">
+                        <input type="date" placeholder="DD/MM/YYYY" class="form-control w-50">
+                        <input type="time" class="form-control w-50 ms-3 " placeholder="HH/MM">
+                    </div>
+                    <br>
+                    <button type="submit" class="btn btn-primary">SEARCH</button>
+                </div>
+                <br>
+            </form>
+        </div>
+    </section>
+    <section th:replace="~{home/homefragment :: feature}"></section>
+    <section th:replace="~{home/homefragment :: comment}"></section>
+    <section th:replace="~{home/homefragment :: where}"></section>
+</main>
+<footer th:replace="~{layout/template :: footer}"></footer>
+<script src="/js/Address.js"></script>
+
+</body>

@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Font Awesome -->
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700,200" rel="stylesheet"/>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" rel="stylesheet">
+
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+            crossorigin="anonymous"></script>
+
+    <title>Booking Car</title>
+</head>
+
+<body>
+<!--Navbar + Leftbar-->
+<div th:replace="~{layout/template::headerlog}"></div>
+<div class="container mt-5">
+    <div class="fs-3">
+        <a href="/index">Home</a>
+        <span> > </span>
+        <span>Book car</span>
+    </div>
+
+    <div class="col-12 mt-3 detail">
+        <!-- Modal -->
+        <div class="modal fade" id="changeDetailModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+             aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <!-- Modal Header -->
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Change Details</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <!-- Modal Body -->
+                    <div class="modal-body">
+                        <!-- Form to change details -->
+                        <form id="changeDetailForm">
+                            <div class="form-group">
+                                <label for="pickUpLocationNew">Pick-up Location:</label>
+                                <input type="text" class="form-control" id="pickUpLocationNew">
+                            </div>
+                            <div class="form-group">
+                                <label for="pickUpDateTimeNew">Pick-up Date and Time:</label>
+                                <input type="datetime-local" class="form-control" id="pickUpDateTimeNew">
+                            </div>
+                            <div class="form-group">
+                                <label for="returnDateTimeNew">Return Date and Time:</label>
+                                <input type="datetime-local" class="form-control" id="returnDateTimeNew">
+                            </div>
+                            <button type="submit" class="btn btn-primary">Save</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-12 mt-3 detail">
+            <div class="d-flex justify-content-between">
+                <div class="title pl-2">Booking Details
+                    <ul class="list-unstyled ml-5 pb-4 list">
+                        <li><i class="fa-solid fa-map-location-dot mr-3 mb-2"></i>Pick-up location:<span
+                                id="pickUpLocation"></span>
+                        </li>
+                        <li><i class="fa-solid fa-car-side mr-3 mb-2"></i>Pick up date and time: <span
+                                id="pickUpDate"></span>
+                        </li>
+                        <li><i class="fa-solid fa-car-side mr-3 mb-2"></i>Return date and time: <span
+                                id="ReturnDate" ></span>
+                        </li>
+                    </ul>
+                </div>
+                <div><i class="fa-solid fa-pen-to-square"></i>
+                    <a id="editDetail" href="#" data-bs-toggle="modal" data-bs-target="#changeDetailModal">Change
+                        Detail</a>
+                </div>
+            </div>
+        </div>
+        <form>
+
+            <ul class="nav nav-tabs nav-fill col-12 p-0">
+                <li class="nav-item step col-4">
+                    <a class="nav-link active" data-toggle="tab" href="#step1">Step 1: Booking Information</a>
+                </li>
+                <li class="nav-item step col-4">
+                    <a class="nav-link" id="info2" data-toggle="tab" href="#step2">Step 2: Payment</a>
+                </li>
+                <li class="nav-item step">
+                    <a class="nav-link" data-toggle="tab" href="#step3">Step 3: Finish</a>
+                </li>
+            </ul>
+            <div class="container mx-auto">
+                <input id="returnDateTimeSend" hidden="hidden">
+                <input id="pickUpDateTimeSend" hidden="hidden">
+                <input id="amountSend" hidden="hidden">
+                <div class="row">
+                    <div class="car-content col-6">
+                        <div id="imageCar" style="box-sizing: border-box; height: 220px; width: 400px">
+
+                        </div>
+
+                        <div class="car-name mt-2" id="carName"></div>
+
+                        <table>
+                            <tr>
+                                <td class="col-6" id="ratting" style="vertical-align: top;">Ratings:</td>
+                            </tr>
+                            <tr>
+                                <td class="col-6">No. of rides:</td>
+                                <td class="col-6" id="noOfRides">0</td>
+                            </tr>
+                            <tr>
+                                <td class="col-6">Price:</td>
+                                <td class="col-6" id="price">900k/day</td>
+                            </tr>
+                            <tr>
+                                <td class="col-6">Locations:</td>
+                                <td class="col-6" id="locationCar">Cau Giay, Ha Noi</td>
+                            </tr>
+                            <tr>
+                                <td class="col-6">Status:</td>
+                                <td class="col-6 status" id="statusCar">Available</td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="col-6">
+                        <div class="car-name mb-5">Booking Summary</div>
+                        <table>
+                            <tr>
+                                <td class="text-right">Number of days:</td>
+                                <td class="text-right" id="dayOfRent"> 15</td>
+                            </tr>
+                            <tr>
+                                <td class="text-right">Price per day:</td>
+                                <td class="text-right" id="basePrice">900.000 VND</td>
+                            </tr>
+                            <tr>
+                                <td class="text-right">Total:</td>
+                                <td class="text-right" id="total"></td>
+                            </tr>
+                            <tr>
+                                <td class="text-right">Deposit:</td>
+                                <td class="text-right" id="deposit">15.000.000 VND</td>
+                            </tr>
+                        </table>
+
+                    </div>
+                </div>
+            </div>
+
+            <!--Step 1-->
+            <div class="tab-content mt-3">
+                <div id="step1" class="tab-pane active">
+                    <form method="post" action="/renter" id="form1" class="container">
+                        <div class="mb-3 mt-4">Renter's Information</div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="fullName" class="attribute">Full Name: <span
+                                            style="color: red;">*</span></label>
+                                    <input type="text" class="form-control" id="fullName" name="full-name" disabled>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="date-of-birth" class="attribute">Date of Birth: <span
+                                            style="color: red;">*</span></label>
+                                    <input type="date" class="form-control" name="date-of-birth" disabled >
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="phone" class="attribute">Phone number: <span
+                                            style="color: red;">*</span></label>
+                                    <input type="text" class="form-control" id="phone" name="phone"  disabled>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="email" class="attribute">Email: <span
+                                            style="color: red;">*</span></label>
+                                    <input type="email" class="form-control" name="email" disabled>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="national" class="attribute">National ID No.: <span
+                                            style="color: red;">*</span></label>
+                                    <input type="text" class="form-control" name="national" disabled>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="driving-license" class="attribute">Driving License:</label>
+                                    <div id="driving-license-info"></div> <!-- Hiển thị thông tin file -->
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="attribute">Address:</label>
+                            <select class="form-control col-8 mb-3" id="cityInput"></select>
+                            <select class="form-control col-8 mb-3" id="districtInput"></select>
+                            <select class="form-control col-8 mb-3" id="wardInput"></select>
+                            <input type="text" class="form-control col-8 mb-3" placeholder="Street" name="street"
+                                   id="street">
+                        </div>
+                        <hr>
+                        <div class="ms-3 fs-3 mb-3">Driver's Information</div>
+                        <div class="text-center">
+                            <div>
+                                <input id="renter" type="checkbox"/>
+                                <label for="renter" class="form-check-label mb-3 p-2 fw-bold text-danger">Different than
+                                    Renter's information</label>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="text-center" id="form1Button">
+                    <button type="reset" class="btn btn-secondary">Discard</button>
+                    <a href="#step2" class="next btn btn-success" id="saveRent">NEXT</a>
+                </div>
+
+                <!--Step 2-->
+                <div id="step2" class="tab-pane">
+                    <div class="step-content">
+
+
+                    </div>
+                    <hr>
+
+                    <div>
+                        <div>Please select your payment method</div>
+
+                        <div>
+                            <input type="radio" id="wallet" name="method" required>
+                            <label for="wallet">My wallet</label>
+                            <p class="fs-6 fst-italic">Current balance: <span style="color: green;"
+                                                                              id="currentWallet"> VND</span>
+                            </p>
+                        </div>
+                        <div>
+                            <input type="radio" id="cash" name="method">
+                            <label for="cash">Cash</label>
+                            <p class="fs-6 fst-italic">Our operator will contact you for further instruction</p>
+                        </div>
+                        <div>
+                            <input type="radio" id="transfer" name="method">
+                            <label for="transfer">Bank transfer</label>
+                            <p class="fs-6 fst-italic">Account number: 4502823434 - Account name: Nguyễn Văn Tình -
+                                Bank:
+                                BIDV</p>
+                        </div>
+                        <br>
+
+                        <div class="container mt-5 text-center">
+                            <button type="button" class="btn btn-secondary mr-2">Cancel</button>
+                            <button type="submit" class="btn btn-success" id="confirmBooking">Confirm Booking</button>
+                        </div>
+                        <br>
+                        <br>
+
+                    </div>
+                </div>
+            </div>
+        </form>
+        <!--Step 3-->
+        <div id="step3" class="tab-pane text-left">
+<!--            <div class="mt-4">You've successfully booked Lamborghini Huracan Evo from 13/02/2022 - 14:00 PM to-->
+<!--                23/12/2022 - 14:00 PM.-->
+<!--            </div>-->
+<!--            <div>Your booking number is: 0123452</div>-->
+<!--            <div>Our operator will contact you with further guideance about pickup.</div>-->
+
+<!--            <div class="container mt-5 text-center">-->
+<!--                <button type="button" class="btn btn-warning mr-2">Go to homepage</button>-->
+<!--                <button type="button" class="btn btn-secondary mr-2">Back to another car</button>-->
+<!--                <button type="button" class="btn btn-success">View Booking</button>-->
+<!--            </div>-->
+<!--            <br>-->
+<!--            <br>-->
+        </div>
+        <!--Driver Info-->
+        <form method="post" action="/driver" class="container d-none" id="form2">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="fullNameDriver" class="attribute">Full Name: <span class="text-danger"
+                        >*</span></label>
+                        <input type="text" class="form-control" id="fullNameDriver" name="full-name" required>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="dateOfBirthDriver" class="attribute">Date of Birth: <span class="text-danger"
+                        >*</span></label>
+                        <input type="date" class="form-control" id="dateOfBirthDriver" name="dateOfBirthDriver"
+                               required>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="phoneDriver" class="attribute">Phone number: <span class="text-danger"
+                        >*</span></label>
+                        <input type="text" class="form-control" id="phoneDriver" name="phoneDriver" required>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="emailDriver" class="attribute">Email: <span class="text-danger"
+                        >*</span></label>
+                        <input type="email" class="form-control" id="emailDriver" name="emailDriver" required>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="nationalDrive" class="attribute">National ID No.: <span class="text-danger"
+                        >*</span></label>
+                        <input type="text" class="form-control" id="nationalDrive" name="nationalDrive" required>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="drivingLicenseDriver" class="attribute">Driving License:</label>
+                        <input type="file" class="form-control-file" id="drivingLicenseDriver"
+                               name="drivingLicenseDriver">
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="attribute">Address:</label>
+
+                <!-- Dropdown for City -->
+                <select class="form-control col-8 mb-3" id="city">
+                    <option value="city1">City 1</option>
+                    <option value="city2">City 2</option>
+                    <option value="city3">City 3</option>
+                </select>
+
+                <!-- Dropdown for District -->
+                <select class="form-control col-8 mb-3" id="district">
+                    <option value="district1">District 1</option>
+                    <option value="district2">District 2</option>
+                    <option value="district3">District 3</option>
+                </select>
+
+                <!-- Dropdown for Ward -->
+                <select class="form-control col-8 mb-3" id="ward">
+                    <option value="ward1">Ward 1</option>
+                    <option value="ward2">Ward 2</option>
+                    <option value="ward3">Ward 3</option>
+                </select>
+
+                <!-- Input for Street -->
+                <input type="text" class="form-control col-8 mb-3" id="streetDriver" placeholder="Street">
+            </div>
+            <div class="text-center">
+                <button type="reset" class="btn btn-secondary" id="cancelBtn">Discard</button>
+                <button type="button" class="btn btn-success" id="saveBoth">Save</button>
+            </div>
+        </form>
+        <br>
+        <br>
+
+    </div>
+</div>
+<footer th:replace="~{layout/template::footer}"></footer>
+<script src="/js/Address.js">
+</script>
+<script src="/js/booking.js">
+</script>
+</body>
+</html>

@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Font Awesome -->
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700,200" rel="stylesheet"/>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" rel="stylesheet">
+
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+            crossorigin="anonymous"></script>
+
+    <title>Booking Car</title>
+    <style>
+        .carousel-item img {
+            width: 100%;
+            height: 400px; /* Adjust this value to your desired height */
+            object-fit: cover;
+            box-sizing: border-box;
+        }
+    </style>
+</head>
+<body>
+<div th:replace="~{layout/template::headerlog}"></div>
+<main>
+    <div class="container mt-5">
+        <div style="font-size: large;">
+            <a href="/index">Home</a>
+            <span> > </span>
+            <span>My Cars</span>
+        </div>
+        <h2>List of Cars</h2>
+        <div class="row mb-3">
+            <a class="col-6 text-start ms-auto" href="/car/new">Add Car</a>
+            <div class="col-6 text-end ms-auto">
+                <div class="dropdown">
+                    <button class="btn btn-success dropdown-toggle" type="button" id="sortDropdown"
+                            data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Sort
+                    </button>
+                    <div class="dropdown-menu" aria-labelledby="sortDropdown"
+                         style="margin-left: 360px; border-radius: 5px !important;">
+                        <a class="dropdown-item" href="#">Oldest to Newest</a>
+                        <a class="dropdown-item" href="#">Newest to Oldest</a>
+                    </div>
+                </div>
+            </div>
+            <hr>
+        </div>
+
+        <!--List Car Detail-->
+        <!--Đoạn này sau phải forEach để lấy dữ liệu từ DB-->
+
+        <!--Car 1-->
+        <div th:each="car : ${carlist}">
+            <div class="d-flex justify-content-center">
+                <!--Carousel image-->
+                <div class="carousel slide col-6" data-bs-ride="carousel">
+                    <!-- Indicators -->
+                    <ol class="carousel-indicators">
+                        <li th:each="img, stat : ${car.imageList}" data-bs-target=".carousel"
+                            th:data-bs-slide-to="${stat.index}" th:class="${stat.first} ? 'active' : ''"></li>
+                    </ol>
+                    <!-- Wrapper for slides -->
+                    <div class="carousel-inner">
+                        <div th:each="img, stat : ${car.imageList}"
+                             th:class="${stat.first} ? 'carousel-item active' : 'carousel-item'">
+                            <img class="d-block w-100" th:src="@{'/api/v1/images/'+${img.path}}"
+                                 th:alt="${'Slide ' + stat.count}">
+                        </div>
+                    </div>
+                    <!-- Left and right controls -->
+                    <button class="carousel-control-prev" type="button" data-bs-target=".carousel" data-bs-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Previous</span>
+                    </button>
+                    <button class="carousel-control-next" type="button" data-bs-target=".carousel" data-bs-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Next</span>
+                    </button>
+                </div>
+
+                <div class="col-5 p-5">
+                    <div class="car-name fs-3" th:text="${car.name}"></div>
+                    <table>
+                        <tr>
+                            <td class="col-6" style="vertical-align: top;">Ratings:</td>
+                            <td class="col-6">
+                                <i class="fa-regular fa-star"></i>
+                                <i class="fa-regular fa-star"></i>
+                                <i class="fa-regular fa-star"></i>
+                                <i class="fa-regular fa-star"></i>
+                                <i class="fa-regular fa-star"></i>
+                                <p style="font-size: 12px;">(No ratings yet)</p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="col-6">No. of rides:</td>
+                            <td class="col-6" th:text="${car.numberOfSeats}"></td>
+                        </tr>
+                        <tr>
+                            <td class="col-6">Price:</td>
+                            <td class="col-6" th:text="${car.basePrice}">/day</td>
+                        </tr>
+                        <tr>
+                            <td class="col-6">Locations:</td>
+                            <td class="col-6" th:text="${car.location}"></td>
+                        </tr>
+                        <tr>
+                            <td class="col-6">Status:</td>
+                            <td class="col-6 status" th:text="${car.status}"></td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="button-container">
+
+                    <button th:id="'confirmDeposit' + ${car.id}" class="btn btn-primary mb-2 col-12">Confirm deposit
+                    </button>
+
+                    <button th:id="'confirmPickUp' + ${car.id}" class="btn btn-primary mb-2 col-12">Confirm Pick-up
+                    </button>
+
+                    <button th:id="'confirmReturn' + ${car.id}" class="btn btn-primary mb-2 col-12">Confirm return
+                    </button>
+
+                    <button th:id="'confirmPayment' + ${car.id}" class="btn btn-primary mb-2 col-12">Confirm payment
+                    </button>
+                    <a class="btn btn-primary mb-2 col-12"
+                       th:href="@{/car/edit(id=${car.id})}">Edit
+                    </a>
+                </div>
+            </div>
+            <hr>
+        </div>
+    </div>
+</main>
+<footer th:replace="~{layout/template::footer}"></footer>
+<script src="/js/carlist.js"></script>
+</body>

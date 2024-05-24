@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+          rel="stylesheet"
+          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+          crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+            crossorigin="anonymous"></script>
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+          integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A=="
+          crossorigin="anonymous" referrerpolicy="no-referrer"/>
+    <title>Car Details</title>
+</head>
+
+<body>
+<div th:replace="~{layout/template::headerlog}"></div>
+<form class="container mt-5" method="post" th:action="@{/car/edit(id=${idCar})}" th:object="${carDTO}">
+    <div style="font-size: large;">
+        <a href="http://localhost:8080/">Home</a>
+        <span> > </span>
+        <span>Search Results</span>
+        <span> > </span>
+        <span>Car details</span>
+    </div>
+
+    <h2>Car details</h2>
+    <!--Car Details-->
+    <input id="id" th:value="${idCar}" hidden="hidden">
+    <div class="d-flex justify-content-between">
+        <!--Carousel image-->
+        <div id="carouselExampleIndicators" class="carousel slide col-5" data-bs-ride="carousel">
+            <ol class="carousel-indicators">
+                <li data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0"
+                    class="active"></li>
+                <li data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1"></li>
+                <li data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2"></li>
+                <li data-bs-target="#carouselExampleIndicators" data-bs-slide-to="3"></li>
+            </ol>
+            <div class="carousel-inner" id="imageCar">
+
+            </div>
+        </div>
+<!--        <div>-->
+<!--            <button class="carousel-control-prev" type="button"-->
+<!--                    data-bs-target="#carouselExampleIndicators"-->
+<!--                    data-bs-slide="prev">-->
+<!--                <span class="carousel-control-prev-icon" aria-hidden="true"></span>-->
+<!--                <span class="visually-hidden">Previous</span>-->
+<!--            </button>-->
+<!--            <button class="carousel-control-next" type="button"-->
+<!--                    data-bs-target="#carouselExampleIndicators"-->
+<!--                    data-bs-slide="next">-->
+<!--                <span class="carousel-control-next-icon" aria-hidden="true"></span>-->
+<!--                <span class="visually-hidden">Next</span>-->
+<!--            </button>-->
+<!--        </div>-->
+
+    </div>
+
+    <div class="col-5">
+        <div class="car-name fs-3" id="carName"></div>
+        <table>
+            <tr>
+                <td class="col-6" id="ratting" style="vertical-align: top;">Ratings:
+                </td>
+
+            </tr>
+            <tr>
+                <td class="col-6">No. of rides:</td>
+                <td class="col-6" id="noOfRides">0</td>
+            </tr>
+            <tr>
+                <td class="col-6">Price:</td>
+                <td class="col-6" id="price"></td>
+            </tr>
+            <tr>
+                <td class="col-6">Locations:</td>
+                <td class="col-6" id="locationCar">Cau Giay, Ha Noi</td>
+            </tr>
+            <tr>
+                <td class="col-6">Status:</td>
+                <td>
+                    <select class="col-6 status" id="statusCar"></select>
+                </td>
+            </tr>
+        </table>
+        <br>
+
+    </div>
+    </div>
+
+    <!--Tabs-->
+    <div>
+        <ul class="nav nav-tabs mt-4">
+            <li class="nav-item">
+                <a class="nav-link active step-btn" data-bs-toggle="tab" href="#tab1">Basic
+                    Information</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link step-btn" id="detailCar" data-bs-toggle="tab" href="#tab2">Details</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link step-btn" data-bs-toggle="tab" href="#tab3">Terms of use</a>
+            </li>
+        </ul>
+        <hr class="mt-0 w-100">
+
+
+        <div class="tab-content">
+            <!--Tab 1-->
+            <div id="tab1" class="tab-pane active">
+                <div class="row">
+                    <div class="col-6">
+                        <div class="  my-3" id="licensePlate">License plate:
+                            <span></span></div>
+                        <div class="  my-3" id="brand">Brand name:</div>
+                        <div class="  my-3" id="productionYear">Production year:</div>
+                        <div class="  my-3" id="transmission">Transmission:</div>
+                    </div>
+                    <div class="col-6">
+                        <div class="  my-3" id="color">Color:</div>
+                        <div class="  my-3" id="model">Model:</div>
+                        <div class="  my-3" id="numSeat">No. of seats:</div>
+                        <div class="  my-3" id="fuel">Fuel:</div>
+                    </div>
+                </div>
+
+                <div>
+                    <div class="  my-3">Document:</div>
+                    <table class="table col-10">
+                        <thead class="thead-light">
+                        <tr>
+                            <th>No</th>
+                            <th>Name</th>
+                            <th>Note</th>
+                            <th>Link</th>
+                        </tr>
+                        </thead>
+                        <tbody id="documentTableBody">
+
+                        </tbody>
+                    </table>
+                    <div style="margin-left: 80px;">Note: Documents will be available for viewing
+                        after you've
+                        paid the
+                        deposit for rent
+                    </div>
+                    <br>
+                    <br>
+                </div>
+            </div>
+
+
+            <!--Tab 2-->
+            <div id="tab2" class="tab-pane">
+                <div class="step-content">
+                    <div class="container">
+                        <div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="mileageCar" class="attribute">Mileage: <span
+                                                class="text-danger">*</span></label>
+                                        <input type="text" class="form-control" id="mileageCar"
+                                               name="mileage" th:field="*{mileage}"
+                                        >
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="consumption" class="attribute">Fuel consumption:
+                                            <span
+                                                    class="text-danger">*</span></label>
+                                        <div class="d-flex">
+                                            <input type="text" class="form-control col-3"
+                                                   id="consumption" name="fuelConsumption"
+                                                   th:field="*{fuelConsumption}">
+                                            <span class="attribute ml-3 mt-2">liter/100 km</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+
+                                        <label for="city">City</label>
+                                        <select class="form-control col-12 mb-3" name="cityName"
+                                                id="city">
+                                        </select>
+
+                                        <!-- Dropdown for District -->
+                                        <label class="attribute">District</label>
+                                        <select class="form-control col-12 mb-3" name="districtName"
+                                                id="district">
+                                        </select>
+                                        <label class="attribute">Ward</label>
+                                        <select class="form-control col-12 mb-3" name="wardName"
+                                                id="ward"
+                                                th:field="*{wardId}">
+                                        </select>
+
+                                        <!-- Input for Street -->
+                                        <label class="attribute">address</label>
+                                        <input name="streetAddress" type="text"
+                                               class="form-control col-12 mb-3" id="street"
+                                               placeholder="Street" th:field="*{address}">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="description"
+                                               class="attribute">Description: </label>
+                                        <textarea class="form-control" rows="7" id="description"
+                                                  name="description" th:field="*{description}"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="my-3">Additional functions:</div>
+                            <div class="container" id="functions">
+                                <div class="attribute my-3">Images: <span
+                                        class="text-danger">*</span></div>
+                                <div class="container">
+                                    <div
+                                            class="container d-flex justify-content-around flex-wrap gap-3">
+                                        <div class="container d-flex justify-content-around">
+                                            <div>
+                                                <div class="attribute mb-2">Front<span
+                                                        class="text-danger">*</span></div>
+                                                <div class="drop-drag-img">
+                                                    <div class="drop-zone" data-preview-id="1"
+                                                         style="width: 400px">
+                                                        <span class="drop-zone__prompt">Drop file here or click to upload</span>
+                                                        <input id="car-image-1" type="file"
+                                                               name="front"
+                                                               class="drop-zone__input"
+                                                               accept="image/png, image/gif, image/jpeg">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div>
+                                                <div class="attribute mb-2">Back<span
+                                                        class="text-danger">*</span></div>
+                                                <div class="drop-drag-img">
+                                                    <div class="drop-zone" data-preview-id="2"
+                                                         style="width: 400px">
+                                                        <span class="drop-zone__prompt">Drop file here or click to upload</span>
+                                                        <input id="car-image-2" type="file"
+                                                               name="back"
+                                                               class="drop-zone__input"
+                                                               accept="image/png, image/gif, image/jpeg">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="container d-flex justify-content-around">
+                                            <div>
+                                                <div class="attribute mb-2 mt-4">Left <span
+                                                        class="text-danger">*</span>
+                                                </div>
+                                                <div class="drop-drag-img">
+                                                    <div class="drop-zone" data-preview-id="3"
+                                                         style="width: 400px">
+                                                        <span class="drop-zone__prompt">Drop file here or click to upload</span>
+                                                        <input id="car-image-3" type="file"
+                                                               name="left"
+                                                               class="drop-zone__input"
+                                                               accept="image/png, image/gif, image/jpeg">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div>
+                                                <div class="attribute mb-2 mt-4">Right <span
+                                                        class="text-danger">*</span>
+                                                </div>
+                                                <div class="drop-drag-img">
+                                                    <div class="drop-zone" data-preview-id="4"
+                                                         style="width: 400px">
+                                                        <span class="drop-zone__prompt">Drop file here or click to upload</span>
+                                                        <input id="car-image-4" type="file"
+                                                               name="right"
+                                                               class="drop-zone__input"
+                                                               accept="image/png, image/gif, image/jpeg">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="mt-5">
+                                        <div>
+                                            Please include full 4 images of your vehicle
+                                        </div>
+                                        <div>
+                                            File type: .jpg, .jpeg, .png, .gif
+                                        </div>
+                                    </div>
+                                    <br>
+                                    <br>
+                                </div>
+                                <br>
+                                <br>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <br>
+                <br>
+
+                <!--Tab 3-->
+                <div id="tab3" class="tab-pane">
+                    <div class="container">
+                        <div class="row d-flex ">
+                            <div class="  my-3 col-3">Base price:</div>
+                            <div class="col-3 mt-2">
+                                <input type="text" class="form-control" th:field="*{basePrice}">
+                            </div>
+                            <p class="mt-3 w-25">VND/Day</p>
+                        </div>
+                        <div class="row">
+                            <div class="  my-3 col-3">Required deposit:</div>
+                            <div class="col-3 mt-2">
+                                <input type="text" class="form-control" th:field="*{requiredDeposit}">
+                            </div>
+                            <p class="mt-3 w-25">VND</p>
+                        </div>
+                    </div>
+                    <hr class="w-50">
+                    <div class="  my-3">Term of use:</div>
+                    <div class="checkbox-container">
+                        <div class="row">
+                            <div class="col-4">
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="no-smoking" name="no-smoking" class="mr-2">
+                                    <label for="no-smoking">No smoking</label>
+                                </div>
+                            </div>
+                            <div class="col-4">
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="no-food" name="no-food" class="mr-2">
+                                    <label for="no-food">No food in car</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-4">
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="no-pet" name="no-pet" class="mr-2">
+                                    <label for="no-pet">Camera</label>
+                                </div>
+                            </div>
+                            <div class="col-4">
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="other" name="other" class="mr-2">
+                                    <label for="other">Other</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="text-center">
+                        <button type="reset" name="previous" class="previous btn btn-secondary">Cancel</button>
+                        <button type="submit" name="next" class="next btn btn-success">Save</button>
+                    </div>
+                </div>
+            </div>
+            <br>
+            <br>
+        </div>
+    </div>
+</form>
+<br>
+<br>
+<br>
+<footer th:replace="~{layout/template::footer}"></footer>
+<script>
+    function handlerStepByStep() {
+        const stepBtns = document.querySelectorAll('.step-btn');
+        const tabPanes = document.querySelectorAll('.tab-pane');
+        let currentStepIndex = 0;
+
+        stepBtns.forEach((btn, index) => {
+            btn.addEventListener('click', (e) => {
+                e.preventDefault();
+
+                stepBtns.forEach((btn) => btn.classList.remove('active'));
+                tabPanes.forEach((pane) => pane.classList.remove('show', 'active'));
+
+                btn.classList.add('active');
+
+                const step = btn.getAttribute('href');
+                document.querySelector(step).classList.add('show', 'active');
+
+                currentStepIndex = index;
+            });
+        });
+    }
+
+    handlerStepByStep();
+</script>
+<script src="/js/editcar.js"></script>
+<script src="/js/Address.js"></script>
+</body>
+</html>

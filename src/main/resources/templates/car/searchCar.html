@@ -1,0 +1,167 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>Title</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700,200" rel="stylesheet"/>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
+          rel="stylesheet">
+
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+          rel="stylesheet"
+          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+          crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+            crossorigin="anonymous"></script>
+
+
+</head>
+<style>
+    * {
+        padding: 0;
+        margin: 0;
+        box-sizing: border-box;
+    }
+
+    #controller {
+        max-width: 1240px;
+        margin: 0 auto;
+    }
+
+    label {
+        float: left;
+        font-weight: bold;
+    }
+
+    .breadcrumb-item + .breadcrumb-item::before {
+        content: ">";
+    }
+</style>
+
+<body>
+<div th:replace="~{layout/template::headerlog}"></div>
+<div class="m-2">
+    <nav>
+        <ol class="breadcrumb" style="background: white;">
+            <li class="breadcrumb-item"><a href="http://localhost:8080/">Home</a></li>
+            <li class="breadcrumb-item active">Search Results</li>
+        </ol>
+    </nav>
+</div>
+
+
+<form th:method="get" th:action="@{/car/search}" class="bg-secondary p-2 container-fluid">
+    <div class="ms-5 mt-2 mb-3 text-white w-75">
+        <h5 class="pt-5">PICK-UP LOCATION</h5>
+    </div>
+    <div class=" mb-3 ms-5 col-md-9 d-flex align-items-center">
+        <div class="form-group d-flex align-items-center m-auto gap-3 col-md-6">
+
+            <!-- Dropdown for City -->
+            <select id="city" class="form-control w-25">
+            </select>
+
+            <!-- Dropdown for District -->
+            <select class="form-control   w-25" id="district">
+            </select>
+
+            <!-- Dropdown for Ward -->
+            <select class="form-control  w-25" id="ward">
+            </select>
+        </div>
+        <input type="text" class="form-control w-25 ms-4" id="street" placeholder="Enter your location"
+               aria-label="Text input with segmented dropdown button">
+    </div>
+
+    <div class="d-flex align-items-center justify-content-around">
+        <div class=" text-white mt-5">
+            <h5>PICK-UP DATE AND TIME</h5>
+            <div class="d-flex justify-content-center">
+                <div class="col-md-7 mb-3" style="margin-left: -15px;">
+                    <input type="date" class="form-control" id="pickUpDate" required>
+                </div>
+                <div class="input-group container col-md-3 mb-3">
+                    <input type="time" class="form-control" id="pickUpTime" placeholder="HH:MM"
+                           aria-label="Text input with segmented dropdown button">
+                </div>
+            </div>
+        </div>
+
+
+        <div class=" text-white mt-5 ">
+            <h5>DROP-OFF DATE AND TIME</h5>
+            <div class="d-flex justify-content-center">
+                <div class="col-md-7 mb-3" style="margin-left: -15px;">
+                    <input type="date" class="form-control" name="dropOffDate" id="dropOffDate"
+                           required>
+                </div>
+                <div class="input-group container col-md-3 mb-3">
+                    <input type="time" class="form-control" id="dropOffTime" placeholder="HH:MM"
+                           aria-label="Text input with segmented dropdown button"
+                           name="dropOffTime">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="d-flex gap-3 justify-content-center align-items-center mt-3">
+        <button type="submit" class="btn btn-primary p-1 px-5 mb-3">SEARCH</button>
+    </div>
+</form>
+
+<div class="mt-4">
+    <h2 class="ms-3">Search Results</h2>
+
+    <div class="d-flex justify-content-around align-items-center text-center mt-4 gap-5">
+        <div>
+            <p th:text="'There are ' + ${totalCar} + ' cars that are available for you!'" id="totalCarInfo"></p>
+        </div>
+
+        <div class="d-flex align-items-center gap-1">
+            <div class="fs-3 d-flex gap-1">
+                <div class="border w-12 h-10 text-center rounded">
+                    <i class="fas fa-th-large"></i>
+                </div>
+
+                <div class="border w-12 h-10 text-center rounded">
+                    <i class="fas fa-th-list"></i>
+                </div>
+            </div>
+
+            <div class="input-group col-md-8">
+                <input type="text" class="form-control" placeholder="Newest to Latest"
+                       aria-label="Text input with segmented dropdown button">
+                <div class="input-group-append">
+                    <button type="button"
+                            class="btn btn-outline-secondary dropdown-toggle dropdown-toggle-split"
+                            data-bs-toggle="dropdown" aria-expanded="false">
+                        <span class="visually-hidden">Toggle Dropdown</span>
+                    </button>
+                    <div class="dropdown-menu">
+                        <a class="dropdown-item" href="#">Action</a>
+                        <a class="dropdown-item" href="#">Another action</a>
+                        <a class="dropdown-item" href="#">Something else here</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="#">Separated link</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="carList">
+</div>
+<div id="pagination"></div>
+
+
+<footer th:replace="~{layout/template::footer}"></footer>
+<script src="/js/searchcar.js"></script>
+<script src="/js/Address.js"></script>
+</body>
+
+</html>
